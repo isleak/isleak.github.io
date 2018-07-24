@@ -107,7 +107,7 @@
 
 
 
-  <meta name="keywords" content="Kali Linux," />
+  <meta name="keywords" content="Kali Linux,Tool," />
 
 
 
@@ -120,24 +120,26 @@
 
 
 
-<meta name="description" content="本文摘要本文讲述内容分为两部分，前半部分讲述ARP协议及ARP攻击原理，后半部分讲述在Kali Linux环境下如何实现ARP攻击、ARP欺骗以及IP流量转发，如果对于ARP攻击的背景和原理不感兴趣的话可以直接翻到下面查看操作方法 ARP协议基本功能 局限性 攻击原理 Kali Linux下的实现ARP攻击 IP流量转发 ARP欺骗 ARP协议ARP（Address Resolution Prot">
-<meta name="keywords" content="Kali Linux">
+<meta name="description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
+<meta name="keywords" content="Kali Linux,Tool">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内网渗透（一）">
-<meta property="og:url" content="http://yoursite.com/2018/07/16/blog1/index.html">
+<meta property="og:title" content="内网渗透（二）——Nmap脚本的使用">
+<meta property="og:url" content="http://yoursite.com/2018/07/24/内网渗透（二）/index.html">
 <meta property="og:site_name" content="Isleak&#39;s blog">
-<meta property="og:description" content="本文摘要本文讲述内容分为两部分，前半部分讲述ARP协议及ARP攻击原理，后半部分讲述在Kali Linux环境下如何实现ARP攻击、ARP欺骗以及IP流量转发，如果对于ARP攻击的背景和原理不感兴趣的话可以直接翻到下面查看操作方法 ARP协议基本功能 局限性 攻击原理 Kali Linux下的实现ARP攻击 IP流量转发 ARP欺骗 ARP协议ARP（Address Resolution Prot">
+<meta property="og:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/07/16/blog1/1.png">
-<meta property="og:image" content="http://yoursite.com/2018/07/16/blog1/2.png">
-<meta property="og:image" content="http://yoursite.com/2018/07/16/blog1/3.png">
-<meta property="og:image" content="http://yoursite.com/2018/07/16/blog1/4.png">
-<meta property="og:image" content="http://yoursite.com/2018/07/16/blog1/5.png">
-<meta property="og:updated_time" content="2018-07-24T01:15:56.543Z">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/7.png">
+<meta property="og:updated_time" content="2018-07-24T08:33:52.611Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内网渗透（一）">
-<meta name="twitter:description" content="本文摘要本文讲述内容分为两部分，前半部分讲述ARP协议及ARP攻击原理，后半部分讲述在Kali Linux环境下如何实现ARP攻击、ARP欺骗以及IP流量转发，如果对于ARP攻击的背景和原理不感兴趣的话可以直接翻到下面查看操作方法 ARP协议基本功能 局限性 攻击原理 Kali Linux下的实现ARP攻击 IP流量转发 ARP欺骗 ARP协议ARP（Address Resolution Prot">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/16/blog1/1.png">
+<meta name="twitter:title" content="内网渗透（二）——Nmap脚本的使用">
+<meta name="twitter:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/1.png">
 
 
 
@@ -167,14 +169,14 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/16/blog1/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/24/内网渗透（二）/"/>
 
 
 
 
 
 
-  <title>内网渗透（一） | Isleak's blog</title>
+  <title>内网渗透（二）——Nmap脚本的使用 | Isleak's blog</title>
   
 
 
@@ -301,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/blog1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/24/内网渗透（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="枭雄">
@@ -318,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">内网渗透（一）</h1>
+          <h1 class="post-title" itemprop="name headline">内网渗透（二）——Nmap脚本的使用</h1>
         
 
         <div class="post-meta">
@@ -330,8 +332,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T19:11:46+08:00">
-                2018-07-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-24T09:28:05+08:00">
+                2018-07-24
               </time>
             
 
@@ -362,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  588
+                  913
                 </span>
               
 
@@ -378,7 +380,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -399,24 +401,18 @@
       
 
       
-        <h2 id="本文摘要"><a href="#本文摘要" class="headerlink" title="本文摘要"></a>本文摘要</h2><p>本文讲述内容分为两部分，前半部分讲述ARP协议及ARP攻击原理，后半部分讲述在Kali Linux环境下如何实现ARP攻击、ARP欺骗以及IP流量转发，如果对于ARP攻击的背景和原理不感兴趣的话可以直接翻到下面查看操作方法</p>
-<h3 id="ARP协议"><a href="#ARP协议" class="headerlink" title="ARP协议"></a>ARP协议</h3><pre><code>基本功能
-局限性
-攻击原理
-</code></pre><h3 id="Kali-Linux下的实现"><a href="#Kali-Linux下的实现" class="headerlink" title="Kali Linux下的实现"></a>Kali Linux下的实现</h3><pre><code>ARP攻击
-IP流量转发
-ARP欺骗
-</code></pre><h2 id="ARP协议-1"><a href="#ARP协议-1" class="headerlink" title="ARP协议"></a>ARP协议</h2><p>ARP（Address Resolution Protocol，地址解析协议）是一个位于TCP/IP协议栈中的网络层，负责将某个IP地址   解析成对应的MAC地址。</p>
-<h3 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h3><p>通过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的进行。</p>
-<h3 id="APR攻击的局限性"><a href="#APR攻击的局限性" class="headerlink" title="APR攻击的局限性"></a>APR攻击的局限性</h3><p>ARP攻击仅能在以太网（局域网如：机房、内网、公司网络等）进行。<br>无法对外网（互联网、非本区域内的局域网）进行攻击。</p>
-<h3 id="APR攻击原理"><a href="#APR攻击原理" class="headerlink" title="APR攻击原理"></a>APR攻击原理</h3><p>ARP攻击就是通过伪造IP地址和MAC地址实现ARP欺骗，能够在网络中产生大量的ARP通信量使网络阻塞，攻击者   只要持续不断的发出伪造的ARP响应包就能更改目标主机ARP缓存中的IP-MAC条目，造成网络中断或中间人攻击。</p>
-<h2 id="Kali-Linux下的实现-1"><a href="#Kali-Linux下的实现-1" class="headerlink" title="Kali Linux下的实现"></a>Kali Linux下的实现</h2><h3 id="攻击环境"><a href="#攻击环境" class="headerlink" title="攻击环境"></a>攻击环境</h3><p>攻击主机：Kali Linux 2.0<br>IP：192.168.43.10<br>目标主机：Windows 7<br>IP：192.168.43.79</p>
-<h3 id="APR攻击"><a href="#APR攻击" class="headerlink" title="APR攻击"></a>APR攻击</h3><p>首先用ifconfig来查看攻击主机的IP地址和网卡：<br><img src="/2018/07/16/blog1/1.png" alt=""></p>
-<p>知道了主机的IP地址，之后查看网段存活的主机：<br><img src="/2018/07/16/blog1/2.png" alt=""><br>目标主机<br><img src="/2018/07/16/blog1/3.png" alt=""></p>
-<p>用arpspoof工具对目标主机进行APR攻击(arpspoof -i 网卡 -t 目标IP 网关)：<br><img src="/2018/07/16/blog1/4.png" alt=""></p>
-<p>这时候目标主机不能正常上网：<br><img src="/2018/07/16/blog1/5.png" alt=""></p>
-<p>停止APR攻击，目标主机又能正常上网了。</p>
-<h3 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h3><p> 首先，我们要使用的工具还是arpspoof，因为我们此次攻击方式是欺骗，同时，我们还是用Eteercap去嗅探目标靶子的流量。<br>但是，首先要开始IP转发功能，linux因为系统安全考虑，是不支持IP转发的，其配置文件写在/proc/sys/net/ipv4的ip_forward中。默认为0，接下来修改为1。<br>查看内容：cat  /proc/sys/net/ipv4/ip_forward<br>启动文本模式:ettercap -Tq -i eth0   </p>
+        <p>请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。<br>                                                                   ——小插曲</p>
+<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。<br>nmap是一个网络连接端扫描软件，用来扫描网上电脑开放的网络连接端。确定哪些服务运行在哪些连接端，并且推断计算机运行哪个操作系统（这是亦称 fingerprinting）。它是网络管理员必用的软件之一，以及用以评估网络系统安全。<br>正如大多数被用于网络安全的工具，nmap 也是不少黑客及骇客（又称脚本小子）爱用的工具 。系统管理员可以利用nmap来探测工作环境中未经批准使用的服务器，但是黑客会利用nmap来搜集目标电脑的网络设定，从而计划攻击的方法。<br>Nmap 常被跟评估系统漏洞软件Nessus 混为一谈。Nmap 以隐秘的手法，避开闯入检测系统的监视，并尽可能不影响目标系统的日常操作。<br>本文主要讲述Nmap的简单扫描和脚本使用，在内网渗透中很好用。</p>
+<h2 id="0x01-Nmap的简单使用"><a href="#0x01-Nmap的简单使用" class="headerlink" title="0x01 Nmap的简单使用"></a>0x01 Nmap的简单使用</h2><p> nmap 192.168.10.0/24 ：扫描网段内存活的主机<br> nmap -A 192.168.10.118 : 扫描目标主机的开放端口<br> nmap -O 192.168.10.118 ：扫描目标主机的系统信息<br> namp -PN 192.168.10.118 ：对目标主机进行深度扫描<br> nmap -PS 192.168.10.118 ：ICMP地址阻塞时使用</p>
+<h2 id="0x02-Nmap的脚本使用"><a href="#0x02-Nmap的脚本使用" class="headerlink" title="0x02 Nmap的脚本使用"></a>0x02 Nmap的脚本使用</h2><p>nmap脚本主要分为以下⼏几类，在扫描时可根据需要设置–script=类别这种⽅方式进⾏行⽐比较笼统的扫描：</p>
+<p>auth:           负责处理鉴权证书（绕开鉴权）的脚本<br>broadcast:  在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务<br>brute:          提供暴力破解方式，针对常见的应用如http/snmp等<br>default:       使用-­‐sC或-­‐A选项扫描时候默认的脚本，提供基本脚本扫描能力<br>discovery： 对网络进行更多的信息，如SMB枚举、SNMP查询等<br>dos:             用于进行拒绝服务攻击<br>exploit:       利用已知的漏洞入侵系统<br>external:     利用第三方的数据库或资源，例如进行whois解析<br>fuzzer：       模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞    </p>
+<p>intrusive:   入侵性的脚本，此类脚本可能引发对方的IDS/IPS的记录或屏蔽<br>safe：         此类与intrusive相反，属于安全性脚本<br>malware:    探测目标机是否感染了病毒、开启了后门等信息<br>version:      负责增强服务与版本扫描（Version Detection）功能的脚本<br>vuln:           负责检查目标机是否有常见的漏洞（Vulnerability），如是否有MS08_067</p>
+<h4 id="部分脚本的使用"><a href="#部分脚本的使用" class="headerlink" title="部分脚本的使用"></a>部分脚本的使用</h4><p> （1）nmap –script=auth 192.168.10.*<br>负责处理鉴权证书（绕开鉴权）的脚本,也可以作为检测部分应用弱口令<br><img src="/2018/07/24/内网渗透（二）/1.png" alt=""><br><img src="/2018/07/24/内网渗透（二）/2.png" alt=""></p>
+<p>（2）nmap –script=brute 192.168.10.*<br>提供暴力破解的方式  可对数据库，smb，snmp等进行简单密码的暴力猜解<br><img src="/2018/07/24/内网渗透（二）/3.png" alt=""></p>
+<p>（3）nmap –script=default 192.168.10.*<br>默认的脚本扫描，主要是搜集各种应用服务的信息，收集到后，可再针对具体服务进行攻击<br><img src="/2018/07/24/内网渗透（二）/4.png" alt=""><br><img src="/2018/07/24/内网渗透（二）/5.png" alt=""></p>
+<p>（4）nmap –script=vuln 192.168.10.*<br>检查是否存在常见漏洞<br><img src="/2018/07/24/内网渗透（二）/6.png" alt=""><br><img src="/2018/07/24/内网渗透（二）/7.png" alt=""></p>
+<h2 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a>推荐书籍</h2><p>《Nmap渗透测试指南》</p>
+<h2 id="参阅文章"><a href="#参阅文章" class="headerlink" title="参阅文章"></a>参阅文章</h2><p><a href="http://www.nmap.com.cn/doc/manual.shtm" target="_blank" rel="noopener">Nmap中文手册</a><br><a href="http://www.addon.pub/2018/04/27/nmap%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%88%9D%E6%8E%A2/" target="_blank" rel="noopener">Nmap脚本编写初探</a><br><a href="https://www.bugbank.cn/live/view.html?id=109522" target="_blank" rel="noopener">Nmap正确烹饪及食用方法</a></p>
 
       
     </div>
@@ -475,6 +471,8 @@ ARP欺骗
           
             <a href="/tags/Kali-Linux/" rel="tag"># Kali Linux</a>
           
+            <a href="/tags/Tool/" rel="tag"># Tool</a>
+          
         </div>
       
 
@@ -486,8 +484,8 @@ ARP欺骗
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/15/start-blog/" rel="next" title="blog-start">
-                <i class="fa fa-chevron-left"></i> blog-start
+              <a href="/2018/07/16/内网渗透（一）/" rel="next" title="内网渗透（一）">
+                <i class="fa fa-chevron-left"></i> 内网渗透（一）
               </a>
             
           </div>
@@ -575,7 +573,7 @@ ARP欺骗
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +586,7 @@ ARP欺骗
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -638,7 +636,7 @@ ARP欺骗
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本文摘要"><span class="nav-number">1.</span> <span class="nav-text">本文摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP协议"><span class="nav-number">1.1.</span> <span class="nav-text">ARP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kali-Linux下的实现"><span class="nav-number">1.2.</span> <span class="nav-text">Kali Linux下的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP协议-1"><span class="nav-number">2.</span> <span class="nav-text">ARP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本功能"><span class="nav-number">2.1.</span> <span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APR攻击的局限性"><span class="nav-number">2.2.</span> <span class="nav-text">APR攻击的局限性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APR攻击原理"><span class="nav-number">2.3.</span> <span class="nav-text">APR攻击原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kali-Linux下的实现-1"><span class="nav-number">3.</span> <span class="nav-text">Kali Linux下的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击环境"><span class="nav-number">3.1.</span> <span class="nav-text">攻击环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APR攻击"><span class="nav-number">3.2.</span> <span class="nav-text">APR攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP欺骗"><span class="nav-number">3.3.</span> <span class="nav-text">ARP欺骗</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Nmap的简单使用"><span class="nav-number">2.</span> <span class="nav-text">0x01 Nmap的简单使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-Nmap的脚本使用"><span class="nav-number">3.</span> <span class="nav-text">0x02 Nmap的脚本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#部分脚本的使用"><span class="nav-number">3.0.1.</span> <span class="nav-text">部分脚本的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐书籍"><span class="nav-number">4.</span> <span class="nav-text">推荐书籍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参阅文章"><span class="nav-number">5.</span> <span class="nav-text">参阅文章</span></a></li></ol></div>
             
 
           </div>
@@ -673,7 +671,7 @@ ARP欺骗
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">700</span>
+    <span title="Site words total count">1.6k</span>
   
 </div>
 
@@ -703,7 +701,7 @@ ARP欺骗
 
 <div class="theme-info"> 
   <div class="powered-by"></div> 
-  <span class="post-count">博客全站共 700 字</span> 
+  <span class="post-count">博客全站共 1.6k 字</span> 
 </div>
         
 
