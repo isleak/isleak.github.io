@@ -120,13 +120,13 @@
 
 
 
-<meta name="description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
+<meta name="description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲">
 <meta name="keywords" content="Kali Linux,Tool">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内网渗透（二）——Nmap脚本的使用">
 <meta property="og:url" content="http://yoursite.com/2018/07/24/内网渗透（二）/index.html">
 <meta property="og:site_name" content="Isleak&#39;s blog">
-<meta property="og:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
+<meta property="og:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/2.png">
@@ -135,10 +135,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/5.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/6.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/7.png">
-<meta property="og:updated_time" content="2018-07-25T11:55:17.200Z">
+<meta property="og:updated_time" content="2018-11-11T01:41:00.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内网渗透（二）——Nmap脚本的使用">
-<meta name="twitter:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲 0x00 前言Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。nmap是一个网络连接端扫描软件，用来扫描网上电脑">
+<meta name="twitter:description" content="请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。                                                                   ——小插曲">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/24/内网渗透（二）/1.png">
 
 
@@ -401,7 +401,7 @@
       
 
       
-        <p>请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。<br>                                                                   ——小插曲</p>
+        <p>请你坚定地，沿着自己选择的路走下去。你的所有美好， 世人都看得到 。你的所有坚持， 也都一定会有回报。<br>                                                                   ——小插曲<br><a id="more"></a></p>
 <h1 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h1><p>Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。<br>nmap是一个网络连接端扫描软件，用来扫描网上电脑开放的网络连接端。确定哪些服务运行在哪些连接端，并且推断计算机运行哪个操作系统（这是亦称 fingerprinting）。它是网络管理员必用的软件之一，以及用以评估网络系统安全。<br>正如大多数被用于网络安全的工具，nmap 也是不少黑客及骇客（又称脚本小子）爱用的工具 。系统管理员可以利用nmap来探测工作环境中未经批准使用的服务器，但是黑客会利用nmap来搜集目标电脑的网络设定，从而计划攻击的方法。<br>Nmap 常被跟评估系统漏洞软件Nessus 混为一谈。Nmap 以隐秘的手法，避开闯入检测系统的监视，并尽可能不影响目标系统的日常操作。<br>本文主要讲述Nmap的简单扫描和脚本使用，在内网渗透中很好用。</p>
 <h1 id="0x01-Nmap的简单使用"><a href="#0x01-Nmap的简单使用" class="headerlink" title="0x01 Nmap的简单使用"></a>0x01 Nmap的简单使用</h1><p> nmap 192.168.10.0/24 ：扫描网段内存活的主机<br> nmap -A 192.168.10.118 : 扫描目标主机的开放端口<br> nmap -O 192.168.10.118 ：扫描目标主机的系统信息<br> namp -PN 192.168.10.118 ：对目标主机进行深度扫描<br> nmap -PS 192.168.10.118 ：ICMP地址阻塞时使用</p>
 <h1 id="0x02-Nmap的脚本使用"><a href="#0x02-Nmap的脚本使用" class="headerlink" title="0x02 Nmap的脚本使用"></a>0x02 Nmap的脚本使用</h1><p>nmap脚本主要分为以下⼏几类，在扫描时可根据需要设置–script=类别这种⽅方式进⾏行⽐比较笼统的扫描：</p>
@@ -577,7 +577,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -590,7 +590,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -693,7 +693,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.1k</span>
+    <span title="Site words total count">3.9k</span>
   
 </div>
 
@@ -723,7 +723,7 @@
 
 <div class="theme-info"> 
   <div class="powered-by"></div> 
-  <span class="post-count">博客全站共 3.1k 字</span> 
+  <span class="post-count">博客全站共 3.9k 字</span> 
 </div>
         
 
